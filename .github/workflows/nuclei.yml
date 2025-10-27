@@ -1,0 +1,36 @@
+name: Nuclei Security Scan
+on:
+  push:
+    branches: [ master, main ]
+  pull_request:
+    branches: [ master, main ]
+  schedule:
+    - cron: '0 2 * * 0'
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+
+  nuclei:
+    permissions:
+      security-events: write
+
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: Nuclei - Vulnerability Scan
+        id: nuclei_scan
+        uses: projectdiscovery/nuclei-action@4e0be50f48a61ec8b7cae91d8f7641efeb69456e # main
+        with:
+          target: http://honey.scanme.sh
+
+      - name: GitHub Security Dashboard Alerts update
+        uses: github/codeql-action/upload-sarif@df409f7d9260372694d2637f0b99e74207220ba7 # v3.27.9
+        if: steps.nuclei_scan.outputs.sarif_exists == 'true'
+        with:
+          sarif_file: nuclei.sarif
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
