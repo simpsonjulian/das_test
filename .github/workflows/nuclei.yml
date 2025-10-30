@@ -19,7 +19,9 @@ jobs:
 
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
 
       - name: Nuclei - Vulnerability Scan
         id: nuclei_scan
