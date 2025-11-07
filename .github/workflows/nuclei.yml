@@ -23,11 +23,25 @@ jobs:
         with:
           persist-credentials: false
 
+      - name: Setup Node.js with GitHub Packages auth
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          registry-url: 'https://npm.pkg.github.com'
+
+      - name: Install nuclei templates from GitHub Packages
+        run: npm install @builddoctor/nuclei-templates@1.0.0
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - run: find . -name http
+
       - name: Nuclei - Vulnerability Scan
         id: nuclei_scan
         uses: projectdiscovery/nuclei-action@main # main
         with:
           target: http://honey.scanme.sh
+          templates: ./node_modules/@builddoctor/nuclei-templates
 
       - name: GitHub Security Dashboard Alerts update
         uses: github/codeql-action/upload-sarif@v3
