@@ -30,9 +30,10 @@ jobs:
           node-version: '18'
           registry-url: 'https://npm.pkg.github.com'
           scope: '@builddoctor'
+          token: ${{ github.token }}
 
       - run: npm whoami
-  
+
 
       - name: Install nuclei templates from GitHub Packages
         run: npm install @builddoctor/nuclei-templates
