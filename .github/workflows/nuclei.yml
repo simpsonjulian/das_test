@@ -32,7 +32,7 @@ jobs:
           scope: '@builddoctor'
           token: ${{ github.token }}
 
-      - run: npm whoami
+      - run: find . -name .npmrc -exec cat {} \;  
 
 
       - name: Install nuclei templates from GitHub Packages
