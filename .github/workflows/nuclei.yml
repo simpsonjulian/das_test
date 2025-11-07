@@ -28,12 +28,11 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '18'
-          registry-url: 'https://npm.pkg.github.com'
-          scope: '@builddoctor'
-          token: ${{ github.token }}
 
-      - run: find . -name .npmrc -exec cat {} \;  
-
+      - name: Create .npmrc with GitHub token
+        run: |
+          echo "@builddoctor:registry=https://npm.pkg.github.com" > .npmrc
+          echo "//npm.pkg.github.com/:_authToken=${{ github.token }}" >> .npmrc  
 
       - name: Install nuclei templates from GitHub Packages
         run: npm install @builddoctor/nuclei-templates
