@@ -17,6 +17,7 @@ jobs:
   nuclei:
     permissions:
       security-events: write
+      packages: read
 
     runs-on: ubuntu-latest
     steps:
