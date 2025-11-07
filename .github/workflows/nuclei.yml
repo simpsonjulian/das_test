@@ -31,10 +31,10 @@ jobs:
           registry-url: 'https://npm.pkg.github.com'
           scope: '@builddoctor'
 
+      - run: find . -name .npmrc -exec cat {} \;
+
       - name: Install nuclei templates from GitHub Packages
-        run:
-          npm login --registry=https://npm.pkg.github.com --scope=@builddoctor --auth-type=legacy --token "${NODE_AUTH_TOKEN}"
-          npm install @builddoctor/nuclei-templates
+        run: npm install @builddoctor/nuclei-templates
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
