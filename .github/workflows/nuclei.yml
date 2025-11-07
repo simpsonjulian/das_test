@@ -45,6 +45,7 @@ jobs:
         uses: projectdiscovery/nuclei-action@main # main
         with:
           target: http://honey.scanme.sh
+          flags: -duc
           templates: ${{ github.workspace }}/.node_modules/@builddoctor/nuclei-templates/templates
 
       - name: GitHub Security Dashboard Alerts update
