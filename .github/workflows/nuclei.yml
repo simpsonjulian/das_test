@@ -31,9 +31,12 @@ jobs:
           registry-url: 'https://npm.pkg.github.com'
           scope: '@builddoctor'
 
+      - run: npm whoami
+  
+
       - name: Install nuclei templates from GitHub Packages
-        run: npm install nuclei-templates
-        
+        run: npm install @builddoctor/nuclei-templates
+
       - run: find . -name http
 
       - name: Nuclei - Vulnerability Scan
