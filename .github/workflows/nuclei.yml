@@ -38,9 +38,6 @@ jobs:
       - name: Install nuclei templates from GitHub Packages
         run: npm install @builddoctor/nuclei-templates
 
-      - run: |
-        find . -name http
-
       - name: Nuclei - Vulnerability Scan
         id: nuclei_scan
         uses: projectdiscovery/nuclei-action@main # main
