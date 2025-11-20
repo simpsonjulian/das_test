@@ -38,7 +38,8 @@ jobs:
       - name: Install nuclei templates from GitHub Packages
         run: npm install @builddoctor/nuclei-templates
 
-      - run: find . -name http
+      - run: |
+        find . -name http
 
       - name: Nuclei - Vulnerability Scan
         id: nuclei_scan
@@ -46,7 +47,7 @@ jobs:
         with:
           target: http://honey.scanme.sh
           flags: -duc
-          templates: ${{ github.workspace }}/.node_modules/@builddoctor/nuclei-templates/templates
+          templates: ${{ github.workspace }}/node_modules/@builddoctor/nuclei-templates/templates
 
       - name: GitHub Security Dashboard Alerts update
         uses: github/codeql-action/upload-sarif@v3
